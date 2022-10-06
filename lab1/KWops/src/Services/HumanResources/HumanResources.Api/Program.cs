@@ -1,8 +1,6 @@
 using HumanResources.AppLogic;
-using HumanResources.Domain;
 using HumanResources.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +9,21 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddDbContext<HumanResourcesContext>(options =>
 {
     string connectionString = configuration["ConnectionString"];
-    options.UseSqlServer(connectionString);
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 15,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null);
+    });
+
 #if DEBUG
     options.UseLoggerFactory(LoggerFactory.Create(loggingBuilder => loggingBuilder.AddDebug()));
     options.EnableSensitiveDataLogging();
 #endif
 });
+
+builder.Services.AddScoped<HumanResourcesDbInitializer>();
 
 // Add services to the container.
 builder.Services.AddScoped<IEmployeeRepository, EmployeeDbRepository>();
@@ -27,6 +34,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+//lab01
+IServiceScope startUpScope = app.Services.CreateScope();
+var initializer = startUpScope.ServiceProvider.GetRequiredService<HumanResourcesDbInitializer>();
+initializer.MigrateDatabase();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

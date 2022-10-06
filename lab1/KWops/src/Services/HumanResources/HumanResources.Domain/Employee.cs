@@ -8,9 +8,5 @@
         public DateTime StartDate { get; set; }
         public DateTime? EndDate{ get; set; }
 
-        public static implicit operator Task<object>(Employee? v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
