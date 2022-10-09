@@ -4,10 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>03f6e17d-a42f-4b50-ade5-0e639d1f5008</UserSecretsId>
+    <UserSecretsId>273947a9-5216-4c74-b7d0-6aa7202be607</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
-    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HumanResources.Infrastructure\HumanResources.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Api\Api.csproj" />
+    <ProjectReference Include="..\DevOps.Infrastructure\DevOps.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

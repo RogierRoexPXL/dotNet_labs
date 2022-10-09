@@ -19,12 +19,8 @@ namespace HumanResources.Domain
 
         protected override IEnumerable<object> GetIdComponents()
         {
-            //throw new NotImplementedException();
             yield return Number;
-            yield return LastName;
-            yield return FirstName;
-            yield return StartDate;
-            yield return EndDate;
+            //yield return Number.ToString(); beter?
         }
 
         public void Dismiss(bool withNotice = true)

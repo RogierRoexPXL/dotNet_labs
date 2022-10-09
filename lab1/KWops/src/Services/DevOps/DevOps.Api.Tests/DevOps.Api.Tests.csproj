@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -20,7 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Test\Test.csproj" />
-    <ProjectReference Include="..\HumanResources.Api\HumanResources.Api.csproj" />
+    <ProjectReference Include="..\DevOps.Api\DevOps.Api.csproj" />
+    <ProjectReference Include="..\DevOps.Domain.Tests\DevOps.Domain.Tests.csproj" />
   </ItemGroup>
 
 </Project>
