@@ -1,4 +1,6 @@
+using HumanResources.Api.Filters;
 using HumanResources.AppLogic;
+using HumanResources.Domain;
 using HumanResources.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,12 +25,20 @@ builder.Services.AddDbContext<HumanResourcesContext>(options =>
 #endif
 });
 
-builder.Services.AddScoped<HumanResourcesDbInitializer>();
 
 // Add services to the container.
 builder.Services.AddScoped<IEmployeeRepository, EmployeeDbRepository>();
+builder.Services.AddScoped<HumanResourcesDbInitializer>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddSingleton<IEmployeeFactory, Employee.Factory>();
+builder.Services.AddSingleton(provider => new ApplicationExceptionFilterAttribute(provider.GetRequiredService<ILogger<ApplicationExceptionFilterAttribute>>()));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.AddService<ApplicationExceptionFilterAttribute>();
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -13,16 +13,27 @@ namespace HumanResources.Infrastructure
             _context = context;
         }
 
-        public async Task AddAsync(Employee newEmployee)
+        public async Task AddAsync(IEmployee newEmployee)
         {
             _context.Add(newEmployee);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Employee> GetByNumberAsync(string number)
+        public Task CommitTrackedChangesAsync()
+        {
+            return _context.SaveChangesAsync();
+        }
+
+        public async Task<IEmployee> GetByNumberAsync(EmployeeNumber number)
         {
             var employee = await _context.Employees.FirstOrDefaultAsync(e => e.Number == number);
             return employee;
+        }
+
+        public async Task<int> GetNumberOfStartersOnAsync(DateTime startDate)
+        {
+            var count = await _context.Employees.Where(e => e.StartDate.Date == startDate.Date).CountAsync();
+            return count;
         }
     }
 }

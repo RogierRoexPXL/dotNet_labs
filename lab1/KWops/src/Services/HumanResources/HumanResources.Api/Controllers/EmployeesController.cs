@@ -1,4 +1,6 @@
-﻿using HumanResources.AppLogic;
+﻿using AutoMapper;
+using HumanResources.Api.Models;
+using HumanResources.AppLogic;
 using HumanResources.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -8,41 +10,41 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HumanResources.Api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEmployeeService _employeeService;
+        private readonly IMapper _mapper;
 
-        public EmployeesController(IEmployeeRepository employeeRepository)
+        public EmployeesController(IEmployeeRepository employeeRepository, IEmployeeService employeeService, IMapper mapper)
         {
             _employeeRepository = employeeRepository;
+            _employeeService = employeeService;
+            _mapper = mapper;
         }
 
         [HttpGet("{number}")]
-        public async Task<IActionResult> Get(string number)
+        public async Task<IActionResult> GetByNumber(string number)
         {
-            var employee = await _employeeRepository.GetByNumberAsync(number);
-
-            if (employee == null) return NotFound();
-
-            return Ok(employee);
+            IEmployee? employee = await _employeeRepository.GetByNumberAsync(number);
+            return employee == null ? NotFound() : Ok(_mapper.Map<EmployeeDetailModel>(employee));
         }
 
         [HttpPost]
-        //public async Task<IActionResult> Post([FromBody] Employee newEmployee)
-        public async Task<IActionResult> Post([FromBody] Employee newEmployee)
+        public async Task<IActionResult> Add(EmployeeCreateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+            IEmployee hiredEmployee = await _employeeService.HireNewAsync(model.LastName, model.FirstName, model.StartDate);
+            var outputModel = _mapper.Map<EmployeeDetailModel>(hiredEmployee);
+            return CreatedAtAction(nameof(GetByNumber), new { number = outputModel.Number }, outputModel);
+        }
 
-            await _employeeRepository.AddAsync(newEmployee);
-
-            //TODO fullfill acceptance criteria
-            string url =$"{Request.Scheme}://{Request.Host}{Request.PathBase}{Request.Path}/{newEmployee.Number}"; ;
-            return Created(url, newEmployee);
+        [HttpPost("{number}/dismiss")]
+        public async Task<IActionResult> Dismiss(string number, [FromQuery] bool withNotice = true)
+        {
+            await _employeeService.DismissAsync(number, withNotice);
+            return Ok();
         }
     }
 }
