@@ -1,4 +1,6 @@
-﻿using HumanResources.Domain;
+﻿using AppLogic.Events;
+using HumanResources.AppLogic.Events;
+using HumanResources.Domain;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace HumanResources.AppLogic.Tests
     {
         private Mock<IEmployeeFactory> _employeeFactoryMock;
         private Mock<IEmployeeRepository> _employeeRepositoryMock;
+        private Mock<IEventBus> _eventBusMock;
         private EmployeeService _service;
 
         [SetUp]
@@ -20,8 +23,9 @@ namespace HumanResources.AppLogic.Tests
         {
             _employeeFactoryMock = new Mock<IEmployeeFactory>();
             _employeeRepositoryMock = new Mock<IEmployeeRepository>();
+            _eventBusMock = new Mock<IEventBus>();
 
-            _service = new EmployeeService(_employeeRepositoryMock.Object, _employeeFactoryMock.Object);
+            _service = new EmployeeService(_employeeRepositoryMock.Object, _employeeFactoryMock.Object, _eventBusMock.Object);
         }
 
         [Test]
@@ -36,7 +40,12 @@ namespace HumanResources.AppLogic.Tests
             _employeeRepositoryMock.Setup(repo => repo.GetNumberOfStartersOnAsync(It.IsAny<DateTime>()))
                 .ReturnsAsync(numberOfStartersOnStartDate);
 
-            IEmployee createdEmployee = new Mock<IEmployee>().Object;
+            var createdEmployeeMock = new Mock<IEmployee>();
+            createdEmployeeMock.SetupGet(e => e.Number).Returns(new EmployeeNumber(startDate, 1));
+            createdEmployeeMock.SetupGet(e => e.FirstName).Returns(firstName);
+            createdEmployeeMock.SetupGet(e => e.LastName).Returns(lastName);
+            IEmployee createdEmployee = createdEmployeeMock.Object;
+
             _employeeFactoryMock
                 .Setup(factory =>
                     factory.CreateNew(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<int>()))
@@ -51,6 +60,13 @@ namespace HumanResources.AppLogic.Tests
             _employeeFactoryMock.Verify(
                 factory => factory.CreateNew(lastName, firstName, startDate, expectedSequence), Times.Once);
             _employeeRepositoryMock.Verify(repo => repo.AddAsync(createdEmployee), Times.Once);
+
+            _eventBusMock.Verify(
+                bus => bus.Publish(It.Is<EmployeeHiredIntegrationEvent>(@event =>
+                    @event.Number == createdEmployee.Number &&
+                    @event.FirstName == firstName &&
+                    @event.LastName == lastName)), Times.Once);
+
             Assert.That(result, Is.SameAs(createdEmployee));
         }
 

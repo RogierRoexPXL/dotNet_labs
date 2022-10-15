@@ -1,3 +1,4 @@
+using Api;
 using HumanResources.Api.Filters;
 using HumanResources.AppLogic;
 using HumanResources.Domain;
@@ -33,6 +34,8 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddSingleton<IEmployeeFactory, Employee.Factory>();
 builder.Services.AddSingleton(provider => new ApplicationExceptionFilterAttribute(provider.GetRequiredService<ILogger<ApplicationExceptionFilterAttribute>>()));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddRabbitMQEventBus(configuration);
 
 builder.Services.AddControllers(options =>
 {

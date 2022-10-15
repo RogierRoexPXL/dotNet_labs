@@ -1,5 +1,8 @@
+using Api;
 using Api.Filters;
+using AppLogic.Events;
 using DevOps.AppLogic;
+using DevOps.AppLogic.Events;
 using DevOps.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +30,9 @@ builder.Services.AddScoped<ITeamRepository, TeamDbRepository>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddSingleton(provider => new ApplicationExceptionFilterAttribute(provider.GetRequiredService<ILogger<ApplicationExceptionFilterAttribute>>()));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddRabbitMQEventBus(configuration);
+builder.Services.AddScoped<EmployeeHiredEventHandler>();
 
 builder.Services.AddControllers(options =>
 {
@@ -57,4 +63,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+AddEventBusSubscriptions(app);
+
 app.Run();
+
+// helper method
+void AddEventBusSubscriptions(IApplicationBuilder app)
+{
+    IEventBus eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+
+    eventBus.Subscribe<EmployeeHiredIntegrationEvent, EmployeeHiredEventHandler>();
+}

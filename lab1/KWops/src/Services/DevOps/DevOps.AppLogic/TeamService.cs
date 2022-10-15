@@ -1,4 +1,6 @@
-﻿namespace DevOps.AppLogic
+﻿using DevOps.Domain;
+
+namespace DevOps.AppLogic
 {
     internal class TeamService : ITeamService
     {
@@ -13,10 +15,11 @@
         {
             var rnd = new Random();
             var freeDevelopers = _developerRepository.FindDevelopersWithoutATeamAsync().Result
-                .OrderBy(i => rnd.Next());
-            
-            int counter = requiredNumberOfDevelopers > freeDevelopers.Count() 
-                ? freeDevelopers.Count()
+                .OrderBy(_ => rnd.Next())
+                .ToList();
+
+            int counter = requiredNumberOfDevelopers > freeDevelopers.Count
+                ? freeDevelopers.Count
                 : requiredNumberOfDevelopers;
 
             for (var i = 0; i < counter; i++)

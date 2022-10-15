@@ -15,7 +15,7 @@ namespace HumanResources.Infrastructure
 
         public async Task AddAsync(IEmployee newEmployee)
         {
-            _context.Add(newEmployee);
+            await _context.AddAsync(newEmployee);
             await _context.SaveChangesAsync();
         }
 

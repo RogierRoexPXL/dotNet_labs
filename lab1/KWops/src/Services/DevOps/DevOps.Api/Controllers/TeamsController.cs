@@ -50,7 +50,7 @@ namespace DevOps.Api.Controllers
                 await _teamService.AssembleDevelopersAsyncFor(team, model.RequiredNumberOfDevelopers);
                 var outputModel = _mapper.Map<TeamDetailModel>(team);
                 
-                return Ok(outputModel);
+                return Ok();
             }
         }
     }

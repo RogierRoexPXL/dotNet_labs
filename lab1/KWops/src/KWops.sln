@@ -31,21 +31,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanResources.Api.Tests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{14CFE8A8-672C-4F8B-B08B-742FA15FFCF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.Api", "Services\DevOps\DevOps.Api\DevOps.Api.csproj", "{1EE93EF1-A504-42D7-A116-156C4AEE1E7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOps.Api", "Services\DevOps\DevOps.Api\DevOps.Api.csproj", "{1EE93EF1-A504-42D7-A116-156C4AEE1E7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.Domain", "Services\DevOps\DevOps.Domain\DevOps.Domain.csproj", "{0688D701-C383-44DF-8910-794D7ABBFD21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOps.Domain", "Services\DevOps\DevOps.Domain\DevOps.Domain.csproj", "{0688D701-C383-44DF-8910-794D7ABBFD21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.AppLogic", "Services\DevOps\DevOps.AppLogic\DevOps.AppLogic.csproj", "{DB8861C8-E1D5-4218-ACEB-4BF69002C34B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOps.AppLogic", "Services\DevOps\DevOps.AppLogic\DevOps.AppLogic.csproj", "{DB8861C8-E1D5-4218-ACEB-4BF69002C34B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.Infrastructure", "Services\DevOps\DevOps.Infrastructure\DevOps.Infrastructure.csproj", "{A2FEA6C9-B899-4947-840F-B164BA51F31D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOps.Infrastructure", "Services\DevOps\DevOps.Infrastructure\DevOps.Infrastructure.csproj", "{A2FEA6C9-B899-4947-840F-B164BA51F31D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.Domain.Tests", "Services\DevOps\DevOps.Domain.Tests\DevOps.Domain.Tests.csproj", "{3F70C5BE-0F3D-4936-877C-12AF936E1253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOps.Domain.Tests", "Services\DevOps\DevOps.Domain.Tests\DevOps.Domain.Tests.csproj", "{3F70C5BE-0F3D-4936-877C-12AF936E1253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.AppLogic.Tests", "Services\DevOps\DevOps.AppLogic.Tests\DevOps.AppLogic.Tests.csproj", "{9EFCE116-AC9B-4002-94D2-D09850C334F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOps.AppLogic.Tests", "Services\DevOps\DevOps.AppLogic.Tests\DevOps.AppLogic.Tests.csproj", "{9EFCE116-AC9B-4002-94D2-D09850C334F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.Api.Tests", "Services\DevOps\DevOps.Api.Tests\DevOps.Api.Tests.csproj", "{419B156A-0A0B-474E-8C50-A90BC39E4427}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOps.Api.Tests", "Services\DevOps\DevOps.Api.Tests\DevOps.Api.Tests.csproj", "{419B156A-0A0B-474E-8C50-A90BC39E4427}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "BuildingBlocks\Api\Api.csproj", "{1172D05D-AAE0-46FE-BCD0-4618904563C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "BuildingBlocks\Api\Api.csproj", "{1172D05D-AAE0-46FE-BCD0-4618904563C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppLogic", "BuildingBlocks\AppLogic\AppLogic.csproj", "{CE0366E8-E0E2-4F52-A96A-9BC68799FF5D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "BuildingBlocks\Infrastructure\Infrastructure.csproj", "{5CC1802A-4A12-489C-9CFD-CEFC71F94099}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +129,14 @@ Global
 		{1172D05D-AAE0-46FE-BCD0-4618904563C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1172D05D-AAE0-46FE-BCD0-4618904563C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1172D05D-AAE0-46FE-BCD0-4618904563C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0366E8-E0E2-4F52-A96A-9BC68799FF5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0366E8-E0E2-4F52-A96A-9BC68799FF5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0366E8-E0E2-4F52-A96A-9BC68799FF5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0366E8-E0E2-4F52-A96A-9BC68799FF5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CC1802A-4A12-489C-9CFD-CEFC71F94099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC1802A-4A12-489C-9CFD-CEFC71F94099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC1802A-4A12-489C-9CFD-CEFC71F94099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC1802A-4A12-489C-9CFD-CEFC71F94099}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +161,8 @@ Global
 		{9EFCE116-AC9B-4002-94D2-D09850C334F3} = {14CFE8A8-672C-4F8B-B08B-742FA15FFCF9}
 		{419B156A-0A0B-474E-8C50-A90BC39E4427} = {14CFE8A8-672C-4F8B-B08B-742FA15FFCF9}
 		{1172D05D-AAE0-46FE-BCD0-4618904563C4} = {BFF8085B-9FCF-4097-B11F-71150DBF0125}
+		{CE0366E8-E0E2-4F52-A96A-9BC68799FF5D} = {BFF8085B-9FCF-4097-B11F-71150DBF0125}
+		{5CC1802A-4A12-489C-9CFD-CEFC71F94099} = {BFF8085B-9FCF-4097-B11F-71150DBF0125}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1332D7C3-B169-4C6D-A40E-8BD7686F38F7}

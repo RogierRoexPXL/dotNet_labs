@@ -8,6 +8,7 @@ services:
       dockerfile: Services/HumanResources/HumanResources.Api/Dockerfile
     depends_on:
       - sqldata
+      - rabbitmq
 
   devops.api:
     image: ${DOCKER_REGISTRY-}devopsapi
@@ -16,6 +17,10 @@ services:
       dockerfile: Services/DevOps/DevOps.Api/Dockerfile
     depends_on:
       - sqldata
+      - rabbitmq
 
   sqldata:
     image: mcr.microsoft.com/mssql/server:2019-latest 
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine

@@ -1,4 +1,6 @@
-﻿using HumanResources.Domain;
+﻿using AppLogic.Events;
+using HumanResources.AppLogic.Events;
+using HumanResources.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +13,13 @@ namespace HumanResources.AppLogic
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IEmployeeFactory _employeeFactory;
+        private readonly IEventBus _eventBus;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IEmployeeFactory employeeFactory)
+        public EmployeeService(IEmployeeRepository employeeRepository, IEmployeeFactory employeeFactory, IEventBus eventBus)
         {
             _employeeRepository = employeeRepository;
             _employeeFactory = employeeFactory;
+            _eventBus = eventBus;
         }
 
         public Task DismissAsync(EmployeeNumber employeeNumber, bool withNotice)
@@ -25,13 +29,21 @@ namespace HumanResources.AppLogic
             return _employeeRepository.CommitTrackedChangesAsync();
         }
 
-        public Task<IEmployee> HireNewAsync(string lastName, string firstName, DateTime startDate)
+        public async Task<IEmployee> HireNewAsync(string lastName, string firstName, DateTime startDate)
         {
-            var sequence = _employeeRepository.GetNumberOfStartersOnAsync(startDate).Result + 1;
+            int sequence = await _employeeRepository.GetNumberOfStartersOnAsync(startDate) + 1;
             IEmployee hiredEmployee = _employeeFactory.CreateNew(lastName, firstName, startDate, sequence);
-            _employeeRepository.AddAsync(hiredEmployee);
+            await _employeeRepository.AddAsync(hiredEmployee);
 
-            return Task.FromResult(hiredEmployee);
+            var @event = new EmployeeHiredIntegrationEvent
+            {
+                Number = hiredEmployee.Number,
+                LastName = hiredEmployee.LastName,
+                FirstName = hiredEmployee.FirstName,
+            };
+            _eventBus.Publish(@event);
+
+            return hiredEmployee;
         }
     }
 }

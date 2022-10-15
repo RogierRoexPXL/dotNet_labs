@@ -24,7 +24,7 @@ public class Team : Entity
 
     public void Join(Developer developer)
     {
-        Contracts.Require(!_developers.Contains(developer), $"Developer {developer.FirstName} {developer.LastName} is already part of this team!");
+        Contracts.Require(!_developers.Contains(developer), $"Developer {developer.Id} is already part of this team!");
         _developers.Add(developer);
         developer.TeamId = Id;
     }

@@ -74,8 +74,7 @@ namespace DevOps.Api.Tests
             _teamRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(team);
 
             //Act
-            var result = _controller.AssembleTeam(team.Id, inputModel).Result as OkObjectResult;
-            //var result = _controller.AssembleTeam(team.Id, inputModel).Result as OkResult; FOUT IN ORIGINELE CODE?
+            var result = _controller.AssembleTeam(team.Id, inputModel).Result as OkResult;
 
             //Assert
             Assert.That(result, Is.Not.Null);

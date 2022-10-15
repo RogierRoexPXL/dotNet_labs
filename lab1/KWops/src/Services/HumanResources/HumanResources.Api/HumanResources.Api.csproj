@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Api\Api.csproj" />
     <ProjectReference Include="..\HumanResources.Infrastructure\HumanResources.Infrastructure.csproj" />
   </ItemGroup>
 
