@@ -8,3 +8,4 @@ To run:
 Find Swaggers:
 - HumanResources.Api: <em>localhost:5001/swagger/index.html</em>
 - DevOps.Api: <em>localhost:6001/swagger/index.html</em>
+- MQRabbit UI: http://localhost:15672
