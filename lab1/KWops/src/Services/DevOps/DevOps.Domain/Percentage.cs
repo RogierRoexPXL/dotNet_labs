@@ -9,7 +9,7 @@ namespace DevOps.Domain
         private readonly double _value;
 
         //p.Value made for accessing value in DeveloperConfiguration (DevOps.Infra), is this wrong? 
-        public double Value { get { return _value; } }
+        //public double Value { get { return _value; } }
 
         public Percentage(double value)
         {
@@ -34,7 +34,7 @@ namespace DevOps.Domain
             //return $"{_value:}";
         }
 
-        public static implicit operator double(Percentage number) => number.Value;
+        public static implicit operator double(Percentage number) => number._value;
         public static implicit operator Percentage(double value) => new Percentage(value);
 
         public static implicit operator string(Percentage number) => number.ToString();

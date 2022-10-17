@@ -22,11 +22,11 @@ namespace HumanResources.AppLogic
             _eventBus = eventBus;
         }
 
-        public Task DismissAsync(EmployeeNumber employeeNumber, bool withNotice)
+        public async Task DismissAsync(EmployeeNumber employeeNumber, bool withNotice)
         {
-            IEmployee employee = _employeeRepository.GetByNumberAsync(employeeNumber).Result;
+            IEmployee employee = await _employeeRepository.GetByNumberAsync(employeeNumber);
             employee.Dismiss(withNotice);
-            return _employeeRepository.CommitTrackedChangesAsync();
+            await _employeeRepository.CommitTrackedChangesAsync();
         }
 
         public async Task<IEmployee> HireNewAsync(string lastName, string firstName, DateTime startDate)

@@ -17,7 +17,7 @@ namespace DevOps.Infrastructure
 
             //p.Value made for accessing value, is this wrong? 
             builder.Property(d => d.Rating)
-                .HasConversion(p => p.Value, d => new Percentage(d));
+                .HasConversion(p => (double)p, d => new Percentage(d));
         }
     }
 }

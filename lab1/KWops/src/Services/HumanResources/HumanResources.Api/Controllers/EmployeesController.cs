@@ -33,6 +33,7 @@ namespace HumanResources.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(policy:"write")]
         public async Task<IActionResult> Add(EmployeeCreateModel model)
         {
             IEmployee hiredEmployee = await _employeeService.HireNewAsync(model.LastName, model.FirstName, model.StartDate);

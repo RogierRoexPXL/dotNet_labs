@@ -11,10 +11,12 @@ namespace DevOps.AppLogic
             _developerRepository = developerRepository;
         }
 
-        public Task AssembleDevelopersAsyncFor(Team team, int requiredNumberOfDevelopers)
+        public async Task AssembleDevelopersAsyncFor(Team team, int requiredNumberOfDevelopers)
         {
             var rnd = new Random();
-            var freeDevelopers = _developerRepository.FindDevelopersWithoutATeamAsync().Result
+            IReadOnlyList<Developer> developers = await _developerRepository.FindDevelopersWithoutATeamAsync();
+            var freeDevelopers = developers;
+            freeDevelopers = freeDevelopers
                 .OrderBy(_ => rnd.Next())
                 .ToList();
 
@@ -27,7 +29,7 @@ namespace DevOps.AppLogic
                 team.Join(freeDevelopers.ElementAt(i));
             }
 
-            return _developerRepository.CommitTrackedChangesAsync();
+            await _developerRepository.CommitTrackedChangesAsync();
         }
     }
 }
