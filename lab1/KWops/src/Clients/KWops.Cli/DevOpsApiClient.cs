@@ -18,7 +18,7 @@ namespace KWops.Cli
         public async Task<string> GetTeamsAsJsonAsync(string accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            HttpResponseMessage response =  await _httpClient.GetAsync("https://localhost:6001/Teams");
+            HttpResponseMessage response =  await _httpClient.GetAsync("https://localhost:8001/Teams");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"No successful response from API. Status code: {response.StatusCode}");

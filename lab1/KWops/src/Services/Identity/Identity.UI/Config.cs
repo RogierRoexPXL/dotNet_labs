@@ -3,7 +3,9 @@
 
 
 using IdentityServer4.Models;
+using Microsoft.AspNetCore.DataProtection;
 using System.Collections.Generic;
+using Secret = IdentityServer4.Models.Secret;
 
 namespace Identity.UI
 {
@@ -57,8 +59,8 @@ namespace Identity.UI
                     ClientName = "Swagger UI for DevOps Api",
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireClientSecret = false,
-                    RedirectUris = {"https://localhost:6001/swagger/oauth2-redirect.html"},
-                    AllowedCorsOrigins = {"https://localhost:6001"},
+                    RedirectUris = {"https://localhost:8001/swagger/oauth2-redirect.html"},
+                    AllowedCorsOrigins = {"https://localhost:8001"},
                     AllowedScopes = {"devops.read", "manage"}
                 }
                 ,
@@ -71,6 +73,15 @@ namespace Identity.UI
                     RedirectUris = {"https://localhost:5001/swagger/oauth2-redirect.html"},
                     AllowedCorsOrigins = {"https://localhost:5001"},
                     AllowedScopes = {"hr.read", "manage"}
+                },
+                    new Client
+                {
+                    ClientId = "kwops.mobile",
+                    ClientName = "KWops mobile application",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    ClientSecrets = { new Secret("MobileClientSecret".Sha256()) },
+                    RedirectUris = {"myapp://mauicallback"},
+                    AllowedScopes = {"openid", "devops.read", "manage"}
                 }
             };
     }

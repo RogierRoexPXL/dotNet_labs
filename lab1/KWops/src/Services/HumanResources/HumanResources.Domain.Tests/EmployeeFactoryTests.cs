@@ -45,6 +45,7 @@ namespace HumanResources.Domain.Tests
 
         [TestCase(null)]
         [TestCase("a")]
+        [TestCase("b")]
         public void CreateNew_InvalidFirstName_ShouldThrowContractException(string invalidFirstName)
         {
             Assert.That(() => _factory.CreateNew(_lastName, invalidFirstName, _startDate, _sequence), Throws.InstanceOf<ContractException>());

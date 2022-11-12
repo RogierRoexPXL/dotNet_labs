@@ -6,6 +6,7 @@ using IdentityServer4;
 using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -67,6 +68,19 @@ namespace Identity.UI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Make identity server redirections over http possible in Edge and latest versions of browsers.
+            // WARNING: Not valid in a production environment.
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("Content-Security-Policy", "script-src 'unsafe-inline'");
+                await next();
+            });
+
+            // Fix a problem with chrome. Chrome enabled a new feature "Cookies without SameSite must be secure",
+            // the cookies should be expired from https, but in KWops, the internal communication in docker compose is http.
+            // To avoid this problem, the policy of cookies should be in Lax mode.
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 
             app.UseStaticFiles();
 

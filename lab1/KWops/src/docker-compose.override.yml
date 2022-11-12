@@ -22,8 +22,8 @@ services:
       - EventBus__RabbitMQ__Host=rabbitmq
       - Urls__IdentityUrl=http://identity.ui
     ports:
-      - "6000:80"
-      - "6001:443"
+      - "8000:80"
+      - "8001:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

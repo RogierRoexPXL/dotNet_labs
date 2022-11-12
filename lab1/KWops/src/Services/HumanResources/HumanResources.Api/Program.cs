@@ -51,7 +51,7 @@ var readPolicy = new AuthorizationPolicyBuilder()
     .RequireClaim("scope", "hr.read")
     .Build();
 
-builder.Services.AddSingleton(provider => new ApplicationExceptionFilterAttribute(provider.GetRequiredService<ILogger<ApplicationExceptionFilterAttribute>>()));
+//builder.Services.AddSingleton(provider => new ApplicationExceptionFilterAttribute(provider.GetRequiredService<ILogger<ApplicationExceptionFilterAttribute>>()));
 builder.Services.AddControllers(options =>
 {
     options.Filters.AddService<ApplicationExceptionFilterAttribute>();
@@ -123,6 +123,7 @@ initializer.MigrateDatabase();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
@@ -132,7 +133,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
